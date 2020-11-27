@@ -21,12 +21,12 @@ def index():
 @app.route('/students', methods=['GET'])
 def get_students():
     data = list(students.find())
-    
+
     try:
         for student in data:
             student['_id'] = str(student['_id'])
         return jsonify({
-            'students': data
+            'students': data,
         })
     except Exception as error:
         print(error)
@@ -38,11 +38,36 @@ def add_student():
     body = request.get_json()
     
     try:
-        id = len(list(students.find())) + 1
+        """
+        get the maximum id of all the data
+            1- get all the collections
+            2- get the maximum id of all collections
+            3- add the id to the new record
+        """
+        students_data = list(students.find())
+        id = max([student['id'] for student in students_data]) + 1
         body['id'] = id
+
+        # insert the new record to the collections
         _id = students.insert_one(body).inserted_id
+        
+        response = students.find_one({ '_id': _id })
+        response['_id'] = str(response['_id'])
         return jsonify({
-            'student_id': str(_id)
+            'student': response
+        })
+    except Exception as error:
+        print(error)
+        abort(500)
+
+
+@app.route('/students/<int:id>', methods=['GET'])
+def get_student(id):
+    try:
+        response = students.find_one({ 'id': id })
+        response['_id'] = str(response['_id'])
+        return jsonify({
+            'student': response,
         })
     except Exception as error:
         print(error)
@@ -54,13 +79,15 @@ def update_student(id):
     body = request.get_json()
 
     try:
-        response = students.update_one(
+        students.update_one(
             { 'id': id },
             { '$set': body }
         )
+
+        response = students.find_one({ 'id': id })
+        response['_id'] = str(response['_id'])
         return jsonify({
-            'updated': response.modified_count,
-            'student_id': id
+            'student': response
         })
     except Exception as error:
         print(error)
@@ -74,8 +101,7 @@ def delete_student(id):
             { 'id': id }
         )
         return jsonify({
-            'updated': response.deleted_count,
-            'student_id': id
+            'deleted': response.deleted_count,
         })
     except Exception as error:
         print(error)
