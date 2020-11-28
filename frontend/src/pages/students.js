@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -8,6 +8,7 @@ import AddIcon from '@material-ui/icons/Add';
 
 import StudentsTable from '../components/studentsTable';
 
+/*
 function createData(id, name, email, age, grade, number, address) {
     return { id, name, email, age, grade, number, address };
   }
@@ -140,9 +141,27 @@ const rows = [
         '700 WHITTIER STREET Ascension Island'
     ),
   ];
-
+*/
 
 const Students = () => {
+    const [rows, setRows] = useState([])
+    const [err, setErr] = useState('')
+
+    useEffect(() => {
+        fetchStudents()
+    }, []);
+
+    const fetchStudents = async() => {
+        await fetch('http://127.0.0.1:5000/students', {
+            method: 'GET'
+        }).then((res) => res.json())
+        .then((res) => setRows(res.students))
+        .catch((error) => {
+            setErr(error.name + ': ' + error.message);
+            console.log(err)
+        })
+    }
+
     const history = useHistory()
     let matches = useMediaQuery('(max-width:762px)');
 
