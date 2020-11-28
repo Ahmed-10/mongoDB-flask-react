@@ -24,8 +24,12 @@ const StudentDetails = (props) => {
             method: 'GET'
         }).then((res) => res.json())
         .then((res) => {
-            console.log(res);
-            setStudent(res.student);
+            if (res.error){
+                setErr(res.message);
+                history.push({ pathname: '/error/404'})
+            }else{
+                setStudent(res.student);
+            }
         }).catch((error) => {
             setErr(error.name + ': ' + error.message);
             console.log(err)
