@@ -24,120 +24,120 @@ const rows = [
     ),
     createData(
         1, 
-        'Alex Dupuy Franklin Kyler SHORT', 
-        'Russorv@state.gov', 
-        25, 
-        'A',
-        '(718) 491-9324',
-        '5600 FIRST AVENUE Afghanistan'
+        'Andrew Mayock Adam Noelle CARSON', 
+        'sullivanjj@state.com', 
+        23, 
+        'C',
+        '(718) 492-0760',
+        '5600 FIRST AVENUE Åland Islands'
     ),
     createData(
         2, 
-        'Alex Dupuy Franklin Kyler SHORT', 
+        'Andrew Shapiro Alex Josie MORROW', 
         'Russorv@state.gov', 
-        25, 
-        'A',
-        '(718) 491-9324',
-        '5600 FIRST AVENUE Afghanistan'
+        32, 
+        'B',
+        '(043) 748-1721',
+        '5600 FIRST AVENUE Albania'
     ),
     createData(
         3, 
-        'Alex Dupuy Franklin Kyler SHORT', 
+        'Anne-Marie Slaughter Alonzo Jennifer COLON', 
         'Russorv@state.gov', 
-        25, 
-        'A',
-        '(718) 491-9324',
-        '5600 FIRST AVENUE Afghanistan'
+        23, 
+        'D',
+        '(718) 499-7821',
+        '5600 FIRST AVENUE Algeria'
     ),
     createData(
         4, 
-        'Alex Dupuy Franklin Kyler SHORT', 
-        'Russorv@state.gov', 
-        25, 
-        'A',
-        '(718) 491-9324',
-        '5600 FIRST AVENUE Afghanistan'
+        'Anthony Lake Everett Melissa HOLLOWAY', 
+        'sullivanjj@gmail.com', 
+        32, 
+        'F',
+        '(718) 238-7033',
+        '5600 1ST AVE B-8 American Samoa'
     ),
     createData(
         5, 
-        'Alex Dupuy Franklin Kyler SHORT', 
+        'Arturo Valenzuela Clifford Milo SUMMERS', 
         'Russorv@state.gov', 
-        25, 
-        'A',
-        '(718) 491-9324',
-        '5600 FIRST AVENUE Afghanistan'
+        56, 
+        'A+',
+        '(718) 238-8766',
+        '5600 1ST AVENUE Andorra'
     ),
     createData(
         6, 
-        'Alex Dupuy Franklin Kyler SHORT', 
-        'Russorv@state.gov', 
-        25, 
-        'A',
-        '(718) 491-9324',
-        '5600 FIRST AVENUE Afghanistan'
+        'Ban Ki-moon Victor Archer BRYAN', 
+        'mhcaleja@state.gov', 
+        33, 
+        'C+',
+        '(718) 836-8159',
+        '5600 FIRST AVENUE Angola'
     ),
     createData(
         7, 
-        'Alex Dupuy Franklin Kyler SHORT', 
-        'Russorv@state.gov', 
-        25, 
-        'A',
-        '(718) 491-9324',
-        '5600 FIRST AVENUE Afghanistan'
+        'Barack Obama Eddie Gabriela PETERSEN', 
+        'postmaster@state.gov', 
+        21, 
+        'B',
+        '48867',
+        'BROOKLYN NAVY YARD, BUILDING # 7 Anguilla'
     ),
     createData(
         8, 
-        'Alex Dupuy Franklin Kyler SHORT', 
-        'Russorv@state.gov', 
-        25, 
+        'Barbara Mikulski Alvin Allie MCKENZIE', 
+        'rooneym@state.gov', 
+        45, 
         'A',
-        '(718) 491-9324',
-        '5600 FIRST AVENUE Afghanistan'
+        '43006801300',
+        '826 WASHINGTON STREET Antarctica'
     ),
     createData(
         9, 
-        'Alex Dupuy Franklin Kyler SHORT', 
-        'Russorv@state.gov', 
-        25, 
-        'A',
-        '(718) 491-9324',
-        '5600 FIRST AVENUE Afghanistan'
+        'Betsy Ebeling Levi Eloise SERRANO', 
+        'russorv@stategov', 
+        44, 
+        'B',
+        '(718) 4398375',
+        '525 WEST STREET Antigua & Barbuda'
     ),
     createData(
         10, 
-        'Alex Dupuy Franklin Kyler SHORT', 
-        'Russorv@state.gov', 
-        25, 
-        'A',
-        '(718) 491-9324',
-        '5600 FIRST AVENUE Afghanistan'
+        'Bill Clinton Amos Jeffrey WILCOX', 
+        'sullivahu@state.gov', 
+        35, 
+        'B+',
+        '(010) 491-2773',
+        '1195 SPOFFORD AVE Argentina'
     ),
     createData(
         11, 
-        'Alex Dupuy Franklin Kyler SHORT', 
-        'Russorv@state.gov', 
-        25, 
-        'A',
-        '(718) 491-9324',
-        '5600 FIRST AVENUE Afghanistan'
+        'Biography Roscoe Holden CAREY', 
+        'russoiv@state.gov', 
+        46, 
+        'C+',
+        '(718) 6305555',
+        '1170 RANDALL AVE Armenia'
     ),
     createData(
         12, 
-        'Alex Dupuy Franklin Kyler SHORT', 
-        'Russorv@state.gov', 
-        25, 
-        'A',
-        '(718) 491-9324',
-        '5600 FIRST AVENUE Afghanistan'
+        'Bonnie Klehr Wesley Arthur CLAYTON', 
+        'miliscd@stategov', 
+        34, 
+        'D',
+        '(718) 4395410',
+        '426 BARRETO STREET Aruba'
     ),
     createData(
         13, 
-        'Alex Dupuy Franklin Kyler SHORT', 
-        'Russorv@state.gov', 
-        25, 
-        'A',
-        '(718) 491-9324',
-        '5600 FIRST AVENUE Afghanistan'
+        'Brian Greenspun Mary Cassidy POOLE', 
+        'abedinh@stategov', 
+        26, 
+        'F',
+        '7184399096',
+        '700 WHITTIER STREET Ascension Island'
     ),
   ];
 
@@ -182,8 +182,7 @@ const Students = () => {
             >   
             <Grid item xs={10}>
                 <StudentsTable 
-                rows={rows}
-                small={matches}/>
+                rows={rows}/>
             </Grid>
         </Grid>
       </>
