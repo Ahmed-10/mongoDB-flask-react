@@ -16,25 +16,24 @@ const StudentDetails = (props) => {
 
 
     useEffect(() => {
+        const fetchStudent = async () => {
+            await fetch(`http://127.0.0.1:5000/students/${id}`, {
+                method: 'GET'
+            }).then((res) => res.json())
+            .then((res) => {
+                if (res.error){
+                    setErr(res.message);
+                    history.push({ pathname: `/error/${res.error}`})
+                }else{
+                    setStudent(res.student);
+                }
+            }).catch((error) => {
+                setErr(error.name + ': ' + error.message);
+                console.log(err)
+            })
+        }
         fetchStudent()
-    }, [])
-
-    const fetchStudent = async () => {
-        await fetch(`http://127.0.0.1:5000/students/${id}`, {
-            method: 'GET'
-        }).then((res) => res.json())
-        .then((res) => {
-            if (res.error){
-                setErr(res.message);
-                history.push({ pathname: '/error/404'})
-            }else{
-                setStudent(res.student);
-            }
-        }).catch((error) => {
-            setErr(error.name + ': ' + error.message);
-            console.log(err)
-        })
-    }
+    }, [err, history, id])
 
     const handleClick = () => {
         history.push({

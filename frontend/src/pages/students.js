@@ -144,25 +144,31 @@ const rows = [
 */
 
 const Students = () => {
+    const history = useHistory()
     const [rows, setRows] = useState([])
     const [err, setErr] = useState('')
 
     useEffect(() => {
+        const fetchStudents = async() => {
+            await fetch('http://127.0.0.1:5000/students', {
+                method: 'GET'
+            }).then((res) => res.json())
+            .then((res) => {
+                if (res.error){
+                    console.log(res.message)
+                    history.push({ pathname: `/error/${res.error}`})
+                }else{
+                    setRows(res.students)
+                }
+            })
+            .catch((error) => {
+                setErr(error.name + ': ' + error.message);
+                console.log(err)
+            })
+        }
         fetchStudents()
-    }, []);
+    }, [err, history]);
 
-    const fetchStudents = async() => {
-        await fetch('http://127.0.0.1:5000/students', {
-            method: 'GET'
-        }).then((res) => res.json())
-        .then((res) => setRows(res.students))
-        .catch((error) => {
-            setErr(error.name + ': ' + error.message);
-            console.log(err)
-        })
-    }
-
-    const history = useHistory()
     let matches = useMediaQuery('(max-width:762px)');
 
     const handleClick = () => {
