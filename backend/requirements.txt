@@ -9,3 +9,6 @@ pymongo==3.11.1
 dnspython==2.0.0
 
 xlrd==1.2.0
+
+Six==1.15.0 
+flask-cors==3.0.9

@@ -1,10 +1,12 @@
 from flask import Flask, request, jsonify, abort
+from flask_cors import CORS
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
 from load_xlsx import get_students_data
 
 app = Flask(__name__)
+CORS(app)
 client = MongoClient("mongodb+srv://user:root@cluster.8acem.mongodb.net/dev?retryWrites=true&w=majority")
 db = client.get_default_database('students')
 students = db.students
@@ -15,7 +17,9 @@ def index():
     # data = list(students.find())
     # students_data = get_students_data()
     # students.insert_many(students_data)
-    return 'Hello World!'
+    return jsonify({
+        'message': 'Hello World!'
+    })
 
 
 @app.route('/students', methods=['GET'])
