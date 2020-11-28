@@ -12,6 +12,7 @@ import Students from './pages/students'
 import StudentDetails from './pages/studentDetails'
 import StudentForm from './pages/studentForm'
 import NotFound from './pages/notfound'
+import ServerError from './pages/serverError'
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path='/students/:id' exact component={StudentDetails} />
         <Route path='/students/:id/edit' component={StudentForm} />
         <Route path='/error/404' component={NotFound} />
+        <Route path='/error/500' component={ServerError} />
       </Switch>
     </Router>
   );
