@@ -1,13 +1,9 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 
 import { TextField } from 'formik-material-ui';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-
 import { Button, Grid } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 
@@ -43,7 +39,10 @@ const SignupSchema = Yup.object().shape({
         .min(2, 'Too Short!')
         .max(50, 'Too Long!')
         .required('Required'),
-    phone: Yup.string()
+    grade: Yup.string()
+        .max(3, 'Too Long!')
+        .required('Required'),
+    number: Yup.string()
         .min(2, 'Too Short!')
         .max(50, 'Too Long!')
         .required('Required'),
@@ -56,6 +55,10 @@ const SignupSchema = Yup.object().shape({
 });
 
 const StudentForm = (props) => {
+    const classes = useStyles();
+
+
+    const history = useHistory()
     const url = (window.location.href).split('/')
     const type = url[url.length - 1] 
 
@@ -66,7 +69,7 @@ const StudentForm = (props) => {
             email: '',
             age: '',
             grade: '',
-            phone: '',
+            number: '',
             address: ''
         }
     }
@@ -76,18 +79,48 @@ const StudentForm = (props) => {
             email: props.location.state.email,
             age: props.location.state.age,
             grade: props.location.state.grade,
-            phone: props.location.state.number,
+            number: props.location.state.number,
             address: props.location.state.address
         }
     }
-    
-    const classes = useStyles();
 
-    const [grade, setGrade] = React.useState('');
-
-    const handleChange = (event) => {
-        setGrade(event.target.value);
-    };
+    const handleSubmit = async(values, { setSubmitting }) => {
+        if( type === 'new'){
+            fetch('http://127.0.0.1:5000/students', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(values)
+            }).then((res) => res.json())
+            .then((res) => {
+                if (res.error){
+                    console.log(res.message)
+                    history.push({ pathname: `/error/${res.error}`})
+                }else{
+                    history.push({ pathname: `/students/${res.student.id}`})
+                }
+            })
+        }else if ( type === 'edit'){
+            fetch(`http://127.0.0.1:5000/students/${props.location.state.id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(values)
+            }).then((res) => res.json())
+            .then((res) => {
+                if (res.error){
+                    console.log(res.message)
+                    history.push({ pathname: `/error/${res.error}`})
+                }else{
+                    history.push({ pathname: `/students/${res.student.id}`})
+                }
+            })
+        }
+    }
 
     return (
         <>
@@ -99,17 +132,19 @@ const StudentForm = (props) => {
             { (type === 'new')? 
             <h1>Add New Student</h1> : 
             <h1>Edit Student <br />id: {props.location.state.id}</h1> }
-            {/* { (type === 'edit') && <p>id: {props.location.state.id}</p> } */}
             <Formik
             initialValues={initialValues}
             validationSchema={SignupSchema}
             // onSubmit action 
+            // onSubmit={(values, { setSubmitting }) => {
+            //     setTimeout(() => {
+            //         setSubmitting(false);
+            //         alert(JSON.stringify(values));
+            //     }, 500);
+            //     }}
             onSubmit={(values, { setSubmitting }) => {
-                setTimeout(() => {
-                    setSubmitting(false);
-                    alert(JSON.stringify(values, null, 2));
-                }, 500);
-                }}>
+                handleSubmit(values, { setSubmitting })
+            }}>
             {({ submitForm, isSubmitting }) => (
             <Form className={classes.root} >
                 <Grid container 
@@ -134,35 +169,19 @@ const StudentForm = (props) => {
                     component={TextField}
                     id="standard-required"
                     label="age" />
-                    <Field
+                    <Field 
                     name='grade'
-                    component= {FormControl} className={classes.formControl}>
-                        <InputLabel id="simple-select-label">Grade</InputLabel>
-                        <Select
-                        labelId="simple-select-label"
-                        id="simple-select"
-                        value={grade}
-                        onChange={handleChange}
-                        >
-                        <MenuItem value={'A'}>A</MenuItem>
-                        <MenuItem value={'A+'}>A+</MenuItem>
-                        <MenuItem value={'B'}>B</MenuItem>
-                        <MenuItem value={'B+'}>B+</MenuItem>
-                        <MenuItem value={'C'}>C</MenuItem>
-                        <MenuItem value={'C+'}>C+</MenuItem>
-                        <MenuItem value={'D'}>D</MenuItem>
-                        <MenuItem value={'F'}>F</MenuItem>
-                        </Select>
-                    </Field>
+                    component={TextField}
+                    id="standard-required" label="Grade" />
                 </Grid>
                 <Grid container 
                 direction='row' 
                 justify='center' 
                 alignItems='center'>
                     <Field 
-                    name='phone'
+                    name='number'
                     component={TextField} 
-                    id="standard-required" label="Phone Number" />
+                    id="standard-required" label="Number" />
                 </Grid>
                 <Grid container 
                 direction='row' 
