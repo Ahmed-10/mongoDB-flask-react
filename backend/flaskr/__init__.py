@@ -11,12 +11,11 @@ client = MongoClient("mongodb+srv://user:root@cluster.8acem.mongodb.net/dev?retr
 db = client.get_default_database('students')
 students = db.students
 
+# students_data = get_students_data()
+# students.insert_many(students_data)
 
 @app.route('/')
 def index():
-    # data = list(students.find())
-    # students_data = get_students_data()
-    # students.insert_many(students_data)
     return jsonify({
         'message': 'you are connected to the database'
     })
