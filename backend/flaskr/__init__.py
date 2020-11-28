@@ -18,7 +18,7 @@ def index():
     # students_data = get_students_data()
     # students.insert_many(students_data)
     return jsonify({
-        'message': 'Hello World!'
+        'message': 'you are connected to the database'
     })
 
 
@@ -75,7 +75,7 @@ def get_student(id):
         })
     except Exception as error:
         print(error)
-        abort(500)
+        abort(404)
 
 
 @app.route('/students/<int:id>', methods=['PATCH'])
@@ -95,7 +95,7 @@ def update_student(id):
         })
     except Exception as error:
         print(error)
-        abort(500)
+        abort(404)
     
 
 @app.route('/students/<int:id>', methods=['DELETE'])
@@ -110,6 +110,24 @@ def delete_student(id):
     except Exception as error:
         print(error)
         abort(500)
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return jsonify({
+        'success': False,
+        'error': 404,
+        'message': 'resource not found'
+    }), 404
+
+
+@app.errorhandler(500)
+def unprocessable(error):
+    return jsonify({
+        'success': False,
+        'error': 500,
+        'message': 'internal server error'
+    }), 500
 
 
 if __name__ == '__main__':
