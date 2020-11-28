@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid'
 import Fab from '@material-ui/core/Fab';
@@ -7,20 +7,54 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 
 const StudentDetails = (props) => {
+    const url = (window.location.href).split('/')
+    const id = url[url.length - 1] 
+
     const history = useHistory()
+    const [student, setStudent] = useState({})
+    const [err, setErr] = useState('')
+
+
+    useEffect(() => {
+        fetchStudent()
+    }, [])
+
+    const fetchStudent = async () => {
+        await fetch(`http://127.0.0.1:5000/students/${id}`, {
+            method: 'GET'
+        }).then((res) => res.json())
+        .then((res) => {
+            console.log(res);
+            setStudent(res.student);
+        }).catch((error) => {
+            setErr(error.name + ': ' + error.message);
+            console.log(err)
+        })
+    }
+
     const handleClick = () => {
         history.push({
-            pathname: `/students/${props.location.state.id}/edit`,
+            pathname: `/students/${student.id}/edit`,
             state: { 
-                'id': props.location.state.id, 
-                'name': props.location.state.name,
-                'email': props.location.state.email,
-                'age': props.location.state.age,
-                'grade': props.location.state.grade,
-                'number': props.location.state.number,
-                'address': props.location.state.address
+                'id': student.id, 
+                'name': student.name,
+                'email': student.email,
+                'age': student.age,
+                'grade': student.grade,
+                'number': student.number,
+                'address': student.address
               }
         })
+    }
+
+    const handleDelete = async() => {
+        await fetch(`http://127.0.0.1:5000/students/${student.id}`, {
+            method: 'DELETE'
+        }).then((res) => res.json())
+        .then((res) => console.log(res))
+        .then(() => history.push({
+            pathname: '/students'
+        }))
     }
 
     return (
@@ -30,10 +64,10 @@ const StudentDetails = (props) => {
         justify="center"
         alignItems="center">
             <Grid item xs={10}>
-                <h1>{props.location.state.name}</h1>
+                <h1>{student.name}</h1>
             </Grid>
             <Grid item xs={10}>
-                <p><small>id: {props.location.state.id}</small></p>
+                <p><small>id: {student.id}</small></p>
             </Grid>
         </Grid>
         <Grid container
@@ -41,15 +75,15 @@ const StudentDetails = (props) => {
         justify="center"
         alignItems="center">
             <Grid item xs={10} sm={5}>
-                <p><strong>email: </strong>{props.location.state.email}</p>
-                <p><strong>phone: </strong>{props.location.state.number}</p>
+                <p><strong>email: </strong>{student.email}</p>
+                <p><strong>phone: </strong>{student.number}</p>
             </Grid>
             <Grid item xs={10} sm={5}>
-                <p><strong>age: </strong>{props.location.state.age}</p>
-                <p><strong>grade: </strong>{props.location.state.grade}</p>
+                <p><strong>age: </strong>{student.age}</p>
+                <p><strong>grade: </strong>{student.grade}</p>
             </Grid>
             <Grid item xs={10}>
-                <p><strong>address: </strong>{props.location.state.address}</p>
+                <p><strong>address: </strong>{student.address}</p>
             </Grid>
         </Grid>
         <Grid container
@@ -67,7 +101,8 @@ const StudentDetails = (props) => {
             <span style={{ width: 10 }}></span>
             <Fab 
             color="secondary"  
-            style={{ marginTop: 30, marginBottom: 30, }}>
+            style={{ marginTop: 30, marginBottom: 30, }}
+            onClick={handleDelete}>
                 <DeleteIcon />
             </Fab>
             <span style={{ width: 30 }}></span>

@@ -121,16 +121,16 @@ export default function StudentsTable(props) {
 
   const handleClick = (id, name, email, age, grade, number, address) => {
     history.push({ 
-        pathname: `/students/${name}`,
-        state: { 
-          'id': id, 
-          'name': name,
-          'email': email,
-          'age': age,
-          'grade': grade,
-          'number': number,
-          'address': address
-        } 
+        pathname: `/students/${id}`,
+        // state: { 
+        //   'id': id, 
+        //   'name': name,
+        //   'email': email,
+        //   'age': age,
+        //   'grade': grade,
+        //   'number': number,
+        //   'address': address
+        // } 
     })
   };
 
