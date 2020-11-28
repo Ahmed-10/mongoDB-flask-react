@@ -12,7 +12,7 @@ def get_students_data():
             'email': data_sheet.cell_value(r, 1),
             'age': int(data_sheet.cell_value(r, 2)),
             'grade': data_sheet.cell_value(r, 3),
-            'phone': data_sheet.cell_value(r, 4),
+            'number': data_sheet.cell_value(r, 4),
             'id': int(data_sheet.cell_value(r, 5)),
             'address': data_sheet.cell_value(r, 6), 
         })
